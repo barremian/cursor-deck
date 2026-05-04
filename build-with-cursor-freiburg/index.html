@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Build with Cursor: An Evening of Agentic Coding — Freiburg</title>
+
+<!-- Reveal.js (CDN, pinned) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<!-- Custom theme -->
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+
+<!--
+  ───────────────────────────────────────────────────────────────────────────
+  HOW TO MAINTAIN THIS DECK
+  - Each slide is a <section class="slide">. Add/remove freely.
+  - To add a new slide, copy any existing <section> and edit the content.
+  - The chrome (logo + eyebrow + footer) is set per-slide.
+  - Add a co-brand: drop a partner logo at ./partner.png and uncomment the
+    <img class="lockup-partner"> lines (see template/README.md).
+  - All colors live in theme.css under :root.
+  - Run `npm run present:template` from the repo root.
+  - Press F to fullscreen, S for speaker view, ESC for slide overview.
+  - Print to PDF: open `?print-pdf` (e.g. file://.../index.html?print-pdf), then File → Print.
+  ───────────────────────────────────────────────────────────────────────────
+-->
+
+<!-- Presentation toolbar: overview (show all) + fullscreen toggles. -->
+<div class="deck-toolbar" role="toolbar" aria-label="Presentation controls">
+  <button id="btn-overview" type="button" aria-pressed="false" title="Show all slides (O)" aria-label="Show all slides">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+      <rect x="1.5" y="1.5" width="5" height="5"/>
+      <rect x="9.5" y="1.5" width="5" height="5"/>
+      <rect x="1.5" y="9.5" width="5" height="5"/>
+      <rect x="9.5" y="9.5" width="5" height="5"/>
+    </svg>
+  </button>
+  <button id="btn-fullscreen" type="button" aria-pressed="false" title="Toggle fullscreen (F)" aria-label="Toggle fullscreen">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+      <path d="M2 6V2h4M14 6V2h-4M2 10v4h4M14 10v4h-4"/>
+    </svg>
+  </button>
+</div>
+
+<!-- Mobile portrait guard: Reveal.js decks are designed for 16:9 landscape.
+     On phones in portrait we show this prompt instead of letterboxed slides. -->
+<div class="orientation-guard" role="status" aria-live="polite">
+  <div class="orientation-guard__icon" aria-hidden="true">
+    <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8">
+      <rect x="5" y="8" width="18" height="12" rx="2"/>
+      <path d="M8 4h6a10 10 0 0 1 10 10v1"/>
+      <path d="M22 13l2 2 2-2"/>
+    </svg>
+  </div>
+  <div class="orientation-guard__title">Rotate your phone</div>
+  <div class="orientation-guard__copy">This presentation is designed for landscape mode.</div>
+</div>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 1 — Title (dark cover)
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide dark">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_DARK.png" alt="Cursor">
+        <!-- Co-brand: uncomment + drop partner.png in this folder -->
+        <!-- <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner" src="partner.png" alt="Partner"> -->
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner-logomark" src="founders-club-logomark.png" alt="Founders Club Freiburg">
+        <img class="lockup-partner-wordmark" src="founders-club-wordmark.png" alt="Founders Club Freiburg">
+      </div>
+      <div class="eyebrow">Build with Cursor · Freiburg</div>
+    </div>
+
+    <img class="cube-wm" src="brand/General Logos/Cube/PNG/CUBE_2D_DARK.png" alt="">
+
+    <div style="margin-top: 110px;">
+      <!-- <div class="eyebrow" style="color: var(--paper); opacity: .7;">A practical session</div> -->
+      <div class="spacer-m"></div>
+      <h1 class="title-xl" style="color: var(--white);">
+        Build with<br>Cursor: Freiburg.
+      </h1>
+      <div class="spacer-m"></div>
+      <p class="lede" style="color: var(--subtle);">An Evening of Agentic Coding.</p>
+      <div class="accent-rule" style="background: var(--paper); opacity: .8;"></div>
+    </div>
+
+    <div style="margin-top: auto; display: flex; justify-content: space-between; align-items: end;">
+      <div>
+        <div style="font-size: 18px; font-weight: 600; color: var(--white);">Aniruthan Mala Elangovan</div>
+        <div style="font-size: 13px; color: var(--subtle); margin-top: 4px;">Software Engineer · SICK AG, Waldkirch</div>
+      </div>
+      <div style="text-align: right;">
+        <div class="mono" style="font-size: 12px; color: var(--subtle); letter-spacing: 0.18em;">2026 May</div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">
+    Welcome everyone to Build with Cursor Freiburg. Tonight we'll go from understanding the paradigm shift to actually building something with agentic coding.
+  </aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 2 — Agenda
+     ════════════════════════════════════════════════════════════════════════ -->
+     <section>
+      <div class="slide">
+        <div class="chrome">
+          <div class="brand-lockup">
+            <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+            <span class="lockup-x" aria-hidden="true">×</span>
+            <img class="lockup-partner-logomark" src="founders-club-logomark.png" alt="Founders Club Freiburg">
+            <img class="lockup-partner-wordmark" src="founders-club-wordmark.png" alt="Founders Club Freiburg">
+          </div>
+          <div class="eyebrow">Agenda</div>
+        </div>
+
+        <div style="margin-top: 50px;">
+          <h2 class="title-l">What we'll cover.</h2>
+          <p class="lede" style="margin-top: 14px;">From autocomplete to agentic — and you'll build something before you leave.</p>
+          <div class="accent-rule"></div>
+        </div>
+
+        <div style="margin-top: 12px;">
+          <div class="row-step">
+            <div class="num">01</div>
+            <div><div class="h">The Paradigm Shift</div><div class="s">How "agentic" coding differs from traditional IDEs and copy-paste.</div></div>
+          </div>
+          <div class="row-step">
+            <div class="num">02</div>
+            <div><div class="h">Cursor Fundamentals</div><div class="s">A primer on UI, Indexing, Chat Modes, and Models.</div></div>
+          </div>
+          <div class="row-step">
+            <div class="num">03</div>
+            <div><div class="h">Real-World Workflows</div><div class="s">Live demos — blank page to functional feature with AI agents.</div></div>
+          </div>
+          <div class="row-step last">
+            <div class="num">04</div>
+            <div><div class="h">Hands-on Building</div><div class="s">Apply these workflows to your own projects in real-time.</div></div>
+          </div>
+        </div>
+
+        <div class="footer">
+          <span class="left">Build with Cursor · Freiburg</span>
+          <span>02 / 24</span>
+        </div>
+      </div>
+      <aside class="notes">Walk through the four parts briefly. Emphasize that part 4 is hands-on — they'll need their laptops.</aside>
+    </section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 3 — Who's in the room (proficiency bars)
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner-logomark" src="founders-club-logomark.png" alt="Founders Club Freiburg">
+        <img class="lockup-partner-wordmark" src="founders-club-wordmark.png" alt="Founders Club Freiburg">
+      </div>
+      <div class="eyebrow">Who's here</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">Mostly curious. A few already building.</h2>
+      <p class="lede" style="margin-top: 14px;">Self-reported Cursor experience from the attendees of the event.</p>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div style="max-width: 680px; margin-top: 28px;">
+      <div class="eyebrow">Cursor experience</div>
+      <div class="spacer-s"></div>
+      <div class="bar-row"><div class="label">Curious</div><div class="pct">36%</div></div>
+      <div class="bar-track"><div class="bar-fill dark" style="width: 36%;"></div></div>
+      <div class="bar-row"><div class="label">Beginner</div><div class="pct">32%</div></div>
+      <div class="bar-track"><div class="bar-fill dark" style="width: 32%;"></div></div>
+      <div class="bar-row"><div class="label">Intermediate</div><div class="pct">18%</div></div>
+      <div class="bar-track"><div class="bar-fill dark" style="width: 18%;"></div></div>
+      <div class="bar-row"><div class="label">Advanced</div><div class="pct">14%</div></div>
+      <div class="bar-track"><div class="bar-fill dark" style="width: 14%;"></div></div>
+    </div>
+
+    <div class="callout" style="margin-top: 28px;">
+      <strong>68% are curious or beginner.</strong> We'll start from the basics and build up from there.
+    </div>
+
+    <div class="footer"><span class="left">Build with Cursor · Freiburg</span><span>03 / 24</span></div>
+  </div>
+  <aside class="notes">Quick audience snapshot from the Luma registration form. Two-thirds haven't used Cursor much — good signal to spend time on fundamentals before the hands-on part.</aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 4 — The Evolution of Developer Productivity
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner-logomark" src="founders-club-logomark.png" alt="Founders Club Freiburg">
+        <img class="lockup-partner-wordmark" src="founders-club-wordmark.png" alt="Founders Club Freiburg">
+      </div>
+      <div class="eyebrow">The Paradigm Shift</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">How we get unstuck has changed.</h2>
+      <p class="lede" style="margin-top: 14px;">Three eras, each with a different default reflex when you don't know how to do something.</p>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div class="row-3" style="margin-top: 30px;">
+      <div class="card">
+        <div class="num">01</div>
+        <div class="name">Pre-AI</div>
+        <div class="desc">Docs, StackOverflow, forums, blog posts. You search, read, synthesize, then write every line yourself.</div>
+      </div>
+      <div class="card">
+        <div class="num">02</div>
+        <div class="name">AI, pre-agentic</div>
+        <div class="desc">Ask a chatbot, copy the snippet, paste it in. Faster answers — but zero project context and no memory between prompts.</div>
+      </div>
+      <div class="card">
+        <div class="num">03</div>
+        <div class="name">Agentic</div>
+        <div class="desc">Agents with harness — they see your full codebase, respect your conventions, and coordinate multi-file changes semi-autonomously on your behalf.</div>
+      </div>
+    </div>
+
+    <div class="footer"><span class="left">Build with Cursor · Freiburg</span><span>04 / 24</span></div>
+  </div>
+  <aside class="notes">Keep it relatable. Pre-AI: everyone lived on StackOverflow and official docs. AI copy-paste era: faster answers but you still had to glue everything together manually with no project awareness. Agentic: the tool understands your codebase, your rules, and can act across files — you shift from writing to reviewing.</aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 5 — What changes day-to-day
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner-logomark" src="founders-club-logomark.png" alt="Founders Club Freiburg">
+        <img class="lockup-partner-wordmark" src="founders-club-wordmark.png" alt="Founders Club Freiburg">
+      </div>
+      <div class="eyebrow">The Paradigm Shift</div>
+    </div>
+
+    <div style="margin-top: 36px;">
+      <h2 class="title-l">What changes day-to-day.</h2>
+      <p class="lede" style="margin-top: 10px;">Two concrete shifts in how you spend your time.</p>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div class="row-2" style="margin-top: 30px;">
+      <div class="card">
+        <div class="num">01</div>
+        <div class="name">Reading > Writing</div>
+        <div class="desc">Your daily ratio flips. You spend most of your time <strong>reviewing diffs</strong> the agent produced, not drafting them. The skill that matters: spotting what's wrong in a proposed change quickly — not typing it out.</div>
+      </div>
+      <div class="card">
+        <div class="num">02</div>
+        <div class="name">Iteration gets cheap</div>
+        <div class="desc">Generating a prototype takes 30 seconds, not 2 hours. So you <strong>try three approaches</strong> before committing to one. Decisions become empirical — prove it, don't debate it.</div>
+      </div>
+    </div>
+
+    <div class="footer"><span class="left">Build with Cursor · Freiburg</span><span>05 / 24</span></div>
+  </div>
+  <aside class="notes">Reading > Writing: the most surprising shift for newcomers. You go from "blank page → done" to "review agent output → accept/reject/refine." It's closer to code review than code authoring. Iteration cost: when trying something is nearly free, you stop over-planning and start experimenting. This changes team dynamics too — fewer long design meetings, more quick spikes.</aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 6 — Context is the new skill
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner-logomark" src="founders-club-logomark.png" alt="Founders Club Freiburg">
+        <img class="lockup-partner-wordmark" src="founders-club-wordmark.png" alt="Founders Club Freiburg">
+      </div>
+      <div class="eyebrow">The Paradigm Shift</div>
+    </div>
+
+    <div style="margin-top: 36px;">
+      <h2 class="title-l">Context is the new skill.</h2>
+      <p class="lede" style="margin-top: 10px;">The hard part isn't "how to implement X" — it's giving the agent the right information so it gets X right on the first pass.</p>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div class="row-3" style="margin-top: 30px;">
+      <div class="card left-stripe">
+        <div class="name">Scope the prompt</div>
+        <div class="desc">Attach relevant files, reference specific functions. Vague prompts produce vague code.</div>
+      </div>
+      <div class="card left-stripe">
+        <div class="name">Set up rules</div>
+        <div class="desc">Write project conventions once in <span class="mono">.cursor/rules/</span>. Every session inherits them — no repeating yourself.</div>
+      </div>
+      <div class="card left-stripe">
+        <div class="name">Know what exists</div>
+        <div class="desc">Awareness of libraries, APIs, and patterns you can ask for beats memorising their syntax. Breadth over depth.</div>
+      </div>
+    </div>
+
+    <div class="footer"><span class="left">Build with Cursor · Freiburg</span><span>06 / 24</span></div>
+  </div>
+  <aside class="notes">This is the most actionable point in the section. The bottleneck moves from "can I write this?" to "can I describe this clearly enough?" Three sub-skills: (1) scoping — attach the right files, don't dump the whole repo; (2) rules — codify your conventions so the agent follows them without being told each time; (3) breadth — knowing a library exists means you can ask for it, even if you don't remember the API.</aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 7 — The Cursor Ecosystem
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner-logomark" src="founders-club-logomark.png" alt="Founders Club Freiburg">
+        <img class="lockup-partner-wordmark" src="founders-club-wordmark.png" alt="Founders Club Freiburg">
+      </div>
+      <div class="eyebrow">Cursor Fundamentals</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">The Cursor Ecosystem.</h2>
+      <p class="lede" style="margin-top: 14px;">Access all frontier AI models — with built-in enhancements to make them smarter, faster, and codebase-aware.</p>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div class="row-3" style="margin-top: 20px;">
+      <div class="card">
+        <div class="name">Cursor Desktop</div>
+        <div class="desc">Full IDE with integrated chat, terminal, and agent. Auto-imports VS Code settings and extensions.</div>
+      </div>
+      <div class="card">
+        <div class="name">Cloud Agents</div>
+        <div class="desc">Trigger &amp; manage sync + async agents from Web, Mobile, Slack, or the API.</div>
+      </div>
+      <div class="card">
+        <div class="name">Cursor CLI</div>
+        <div class="desc">Plug Cursor into any IDE or CI/CD process. Install with a single <span class="mono">curl</span> command.</div>
+      </div>
+    </div>
+
+    <div class="row-3" style="margin-top: 16px;">
+      <div class="card left-stripe">
+        <div class="name">Skills, Hooks & MCPs</div>
+      </div>
+      <div class="card left-stripe">
+        <div class="name">Rules</div>
+      </div>
+      <div class="card left-stripe">
+        <div class="name">Automations</div>
+      </div>
+    </div>
+
+    <div class="row-3" style="margin-top: 16px;">
+      <div class="card left-stripe">
+        <div class="name">Canvas</div>
+      </div>
+      <div class="card left-stripe">
+        <div class="name">Onboarding</div>
+      </div>
+      <div class="card left-stripe">
+        <div class="name">Cursor SDK</div>
+      </div>
+    </div>
+
+    <div class="row-3" style="margin-top: 16px;">
+      <div class="card left-stripe">
+        <div class="name">Security Reviews</div>
+      </div>
+      <div class="card left-stripe">
+        <div class="name">Bugbot Code Reviews</div>
+      </div>
+    </div>
+
+    <div class="footer"><span class="left">Build with Cursor · Freiburg</span><span>07 / 24</span></div>
+  </div>
+  <aside class="notes">Walk through each surface. Desktop is the main entry point; CLI and Cloud widen where agents run. Canvas for visual artifacts beside chat. Onboarding is the productized first-run flow in the app—not generic change management. Close with SDK for programmatic agents, Automations for scheduled/webhook triggers, and Skills as reusable agent instructions.</aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 8 — Download and install Cursor
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner-logomark" src="founders-club-logomark.png" alt="Founders Club Freiburg">
+        <img class="lockup-partner-wordmark" src="founders-club-wordmark.png" alt="Founders Club Freiburg">
+      </div>
+      <div class="eyebrow">Getting Started</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">Get Cursor.</h2>
+      <p class="lede" style="margin-top: 14px;">Download the desktop app for macOS, Windows, or Linux.</p>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: minmax(0, 0.52fr) minmax(0, 1.48fr); gap: 28px; align-items: start; margin-top: 8px;">
+      <div style="padding-top: 20px;">
+        <div class="eyebrow" style="color: var(--accent);">Start Here</div>
+        <a class="title-s" href="https://cursor.com/download" style="margin-top: 12px;" target="_blank" rel="noopener">cursor.com/download</a>
+      </div>
+      <div style="display: flex; justify-content: flex-end;">
+        <img src="assets/Screenshots/cursor-download.png" alt="Cursor download page showing desktop, terminal, and web options" style="width: 100%; max-width: 840px; max-height: 500px; object-fit: contain; object-position: top center; display: block;">
+      </div>
+    </div>
+
+    <div class="footer"><span class="left">Build with Cursor · Freiburg</span><span>08 / 24</span></div>
+  </div>
+  <aside class="notes">Show the download page first so beginners know exactly where to start. Emphasize that installation is straightforward and that importing VS Code settings makes the transition low-friction.</aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 10 — Harness in Cursor
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner-logomark" src="founders-club-logomark.png" alt="Founders Club Freiburg">
+        <img class="lockup-partner-wordmark" src="founders-club-wordmark.png" alt="Founders Club Freiburg">
+      </div>
+      <div class="eyebrow">Cursor Fundamentals</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">Harness = the layer around the model.</h2>
+      <p class="lede" style="margin-top: 14px;">In Cursor, the agent is not just a chatbot. The harness combines instructions, tools, and the model so it can act on your codebase.</p>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div class="row-3" style="margin-top: 28px;">
+      <div class="card">
+        <div class="num">01</div>
+        <div class="name">What it is</div>
+        <div class="desc">A runtime wrapper around the model. It adds the prompt, the working context, and the actions the agent is allowed to take.</div>
+      </div>
+      <div class="card">
+        <div class="num">02</div>
+        <div class="name">How Cursor sets it up</div>
+        <div class="desc">Your chat, attached files, and rules become instructions. Built-in search, edit, terminal, browser, and MCP access become tools. The model comes from the selector in chat.</div>
+      </div>
+      <div class="card">
+        <div class="num">03</div>
+        <div class="name">How you influence it</div>
+        <div class="desc">Be specific, attach the right context, choose the right mode/model, and codify repeatable guidance in rules or skills. If the context gets noisy, start a fresh chat.</div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 24px;">
+      <strong>Your leverage is upstream.</strong> You usually do not change the harness directly. You steer it through intent, context, and configuration.
+    </div>
+
+    <div class="footer"><span class="left">Build with Cursor · Freiburg</span><span>09 / 24</span></div>
+  </div>
+  <aside class="notes">Use the official language from the transcript here: the harness is instructions, tools, and model. Then make it practical. In Cursor, users shape the harness indirectly through prompts, attached context, rules, skills, and model choice. The key teaching point is that better steering happens before generation, not after.</aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     Indexing in Cursor
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner-logomark" src="founders-club-logomark.png" alt="Founders Club Freiburg">
+        <img class="lockup-partner-wordmark" src="founders-club-wordmark.png" alt="Founders Club Freiburg">
+      </div>
+      <div class="eyebrow">Cursor Fundamentals</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">Indexing gives the agent a usable map.</h2>
+      <p class="lede" style="margin-top: 14px;">Cursor combines exact search and semantic search so you can ask natural questions and still reach the right files quickly.</p>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div class="row-3" style="margin-top: 28px;">
+      <div class="card">
+        <div class="num">01</div>
+        <div class="name">Exact matches</div>
+        <div class="desc">When you know a symbol, file name, or literal string, the agent uses fast code search to locate it precisely.</div>
+      </div>
+      <div class="card">
+        <div class="num">02</div>
+        <div class="name">Meaning-based search</div>
+        <div class="desc">When you only know the intent, semantic search can still surface relevant code, even if the words do not match exactly.</div>
+      </div>
+      <div class="card">
+        <div class="num">03</div>
+        <div class="name">Context discipline</div>
+        <div class="desc">Explore sub-agents can search large codebases in a separate context and return only the findings that matter.</div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 24px;">
+      <strong>Practical default:</strong> let Cursor index in the background, then ask plain-language questions before you start editing.
+    </div>
+
+    <div class="footer"><span class="left">Build with Cursor · Freiburg</span><span>10 / 24</span></div>
+  </div>
+  <aside class="notes">Keep this practical. The important point is not the implementation detail, but the outcome: exact search for known symbols, semantic search for intent, and sub-agents for better context control in larger repos.</aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     Chat modes in Cursor
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner-logomark" src="founders-club-logomark.png" alt="Founders Club Freiburg">
+        <img class="lockup-partner-wordmark" src="founders-club-wordmark.png" alt="Founders Club Freiburg">
+      </div>
+      <div class="eyebrow">Cursor Fundamentals</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">Chat modes shape the workflow.</h2>
+      <p class="lede" style="margin-top: 14px;">Use the lightest mode that fits the job: understand first, plan second, then edit or debug with evidence.</p>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div class="row-4" style="margin-top: 30px;">
+      <div class="card">
+        <div class="num">01</div>
+        <div class="name">Ask</div>
+        <div class="desc">Read-only exploration for architecture questions, codebase navigation, and quick explanations.</div>
+      </div>
+      <div class="card">
+        <div class="num">02</div>
+        <div class="name">Plan</div>
+        <div class="desc">Research the codebase, clarify requirements, and draft a step-by-step approach before changing files.</div>
+      </div>
+      <div class="card">
+        <div class="num">03</div>
+        <div class="name">Agent</div>
+        <div class="desc">Make edits, run tools, and verify results when the task is already well-scoped.</div>
+      </div>
+      <div class="card">
+        <div class="num">04</div>
+        <div class="name">Debug</div>
+        <div class="desc">Collect runtime evidence, test hypotheses, and work toward a targeted fix instead of guessing.</div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 24px;">
+      <strong>Good habit:</strong> switching modes early usually improves output more than adding another vague prompt.
+    </div>
+
+    <div class="footer"><span class="left">Build with Cursor · Freiburg</span><span>11 / 24</span></div>
+  </div>
+  <aside class="notes">Frame chat modes as operating modes, not marketing labels. Ask is for understanding, Plan is for structuring work, Agent is for execution, and Debug is for evidence-driven investigation.</aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 9 — Cursor startup info
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner-logomark" src="founders-club-logomark.png" alt="Founders Club Freiburg">
+        <img class="lockup-partner-wordmark" src="founders-club-wordmark.png" alt="Founders Club Freiburg">
+      </div>
+      <div class="eyebrow">Getting Started</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">Talk to the agent.</h2>
+      <p class="lede" style="margin-top: 14px;">The fastest way to start in Cursor is to describe what you want clearly and let the agent do the first draft.</p>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div class="row-3" style="margin-top: 28px;">
+      <div class="card">
+        <div class="num">01</div>
+        <div class="name">Instructions</div>
+        <div class="desc">Your prompt, the current chat, and project rules tell the agent how to behave and what good output looks like.</div>
+      </div>
+      <div class="card">
+        <div class="num">02</div>
+        <div class="name">Tools</div>
+        <div class="desc">The agent can search the codebase, edit files, and run terminal commands instead of only replying with text.</div>
+      </div>
+      <div class="card">
+        <div class="num">03</div>
+        <div class="name">Model</div>
+        <div class="desc">Choose the model that fits the task: fast for iteration, stronger reasoning for architecture, debugging, and review.</div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 28px;">
+      <strong>Intent matters.</strong> Specific prompts produce specific code. Vague prompts produce guesswork.
+    </div>
+
+    <div class="footer"><span class="left">Build with Cursor · Freiburg</span><span>12 / 24</span></div>
+  </div>
+  <aside class="notes">This is the distilled startup mental model from the transcript. Beginners only need one idea at first: talk in intent, not syntax. Advanced users can map that to the harness: instructions, tools, and model.</aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 10 — Ways of Working: Code-Centric
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner-logomark" src="founders-club-logomark.png" alt="Founders Club Freiburg">
+        <img class="lockup-partner-wordmark" src="founders-club-wordmark.png" alt="Founders Club Freiburg">
+      </div>
+      <div class="eyebrow">Cursor Fundamentals</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">Ways of working.</h2>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: minmax(0, 0.52fr) minmax(0, 1.48fr); gap: 28px; align-items: start; margin-top: 8px;">
+      <div style="padding-top: 20px;">
+        <div class="eyebrow" style="color: var(--accent);">Workflow</div>
+        <div class="title-s" style="margin-top: 12px;">Code-Centric</div>
+        <p style="margin-top: 12px; color: var(--muted);">Write code with AI inline, review diffs, accept edits, and stay in the editor flow.</p>
+      </div>
+      <div style="display: flex; justify-content: flex-end;">
+        <img src="assets/Cursor Fundamentals/01_Code_Centric.png" alt="Code-Centric workflow in Cursor" style="width: 100%; max-width: 840px; max-height: 550px; object-fit: contain; object-position: top center; display: block;">
+      </div>
+    </div>
+
+    <div class="footer"><span class="left">Build with Cursor · Freiburg</span><span>13 / 24</span></div>
+  </div>
+  <aside class="notes">Code-Centric is the traditional tab-first approach — the agent edits code directly in the editor alongside you.</aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 11 — Ways of Working: Agent-First
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner-logomark" src="founders-club-logomark.png" alt="Founders Club Freiburg">
+        <img class="lockup-partner-wordmark" src="founders-club-wordmark.png" alt="Founders Club Freiburg">
+      </div>
+      <div class="eyebrow">Cursor Fundamentals</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">Ways of working.</h2>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: minmax(0, 0.52fr) minmax(0, 1.48fr); gap: 28px; align-items: start; margin-top: 8px;">
+      <div style="padding-top: 20px;">
+        <div class="eyebrow" style="color: var(--accent);">Workflow</div>
+        <div class="title-s" style="margin-top: 12px;">Agent-First</div>
+        <p style="margin-top: 12px; color: var(--muted);">Plan, Build, Ask, and Debug in a full agent interface with multiple modes, Skills, and MCP servers.</p>
+      </div>
+      <div style="display: flex; justify-content: flex-end;">
+        <img src="assets/Cursor Fundamentals/02_Agent_First.png" alt="Agent-First workflow in Cursor" style="width: 100%; max-width: 840px; max-height: 530px; object-fit: contain; object-position: top center; display: block;">
+      </div>
+    </div>
+
+    <div class="footer"><span class="left">Build with Cursor · Freiburg</span><span>14 / 24</span></div>
+  </div>
+  <aside class="notes">Agent-First puts the chat panel front and center with Plan, Debug, Ask, Image, Skills, and MCP Server modes.</aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 12 — Ways of Working: Multi-Agent Terminals
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner-logomark" src="founders-club-logomark.png" alt="Founders Club Freiburg">
+        <img class="lockup-partner-wordmark" src="founders-club-wordmark.png" alt="Founders Club Freiburg">
+      </div>
+      <div class="eyebrow">Cursor Fundamentals</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">Ways of working.</h2>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: minmax(0, 0.52fr) minmax(0, 1.48fr); gap: 28px; align-items: start; margin-top: 8px;">
+      <div style="padding-top: 20px;">
+        <div class="eyebrow" style="color: var(--accent);">Workflow</div>
+        <div class="title-s" style="margin-top: 12px;">Multi-Agent Terminals</div>
+        <p style="margin-top: 12px; color: var(--muted);">Run multiple agents in parallel across terminal sessions, with each one tackling a different task.</p>
+      </div>
+      <div style="display: flex; justify-content: flex-end;">
+        <img src="assets/Cursor Fundamentals/03_Multi_Agent_Terminals.png" alt="Multi-Agent Terminals in Cursor" style="width: 100%; max-width: 840px; max-height: 500px; object-fit: contain; object-position: top center; display: block;">
+      </div>
+    </div>
+
+    <div class="footer"><span class="left">Build with Cursor · Freiburg</span><span>15 / 24</span></div>
+  </div>
+  <aside class="notes">Multi-Agent Terminals let you run several agents at once in the CLI — great for parallelising work across different parts of a codebase.</aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 13 — Ways of Working: Frontend Design & Testing
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner-logomark" src="founders-club-logomark.png" alt="Founders Club Freiburg">
+        <img class="lockup-partner-wordmark" src="founders-club-wordmark.png" alt="Founders Club Freiburg">
+      </div>
+      <div class="eyebrow">Cursor Fundamentals</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">Ways of working.</h2>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: minmax(0, 0.52fr) minmax(0, 1.48fr); gap: 28px; align-items: start; margin-top: 8px;">
+      <div style="padding-top: 20px;">
+        <div class="eyebrow" style="color: var(--accent);">Workflow</div>
+        <div class="title-s" style="margin-top: 12px;">Frontend Design &amp; Testing</div>
+        <p style="margin-top: 12px; color: var(--muted);">Use the built-in browser mode for visual design, testing, and frontend iteration without leaving the IDE.</p>
+      </div>
+      <div style="display: flex; justify-content: flex-end;">
+        <img src="assets/Cursor Fundamentals/04_Frontend_Design_And_Testing.png" alt="Frontend Design & Testing in Cursor" style="width: 100%; max-width: 840px; max-height: 550px; object-fit: contain; object-position: top center; display: block;">
+      </div>
+    </div>
+
+    <div class="footer"><span class="left">Build with Cursor · Freiburg</span><span>16 / 24</span></div>
+  </div>
+  <aside class="notes">Frontend Design & Testing uses the built-in browser to iterate visually on UI without leaving the IDE.</aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 14 — Ways of Working: Long-Running Async Agents
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner-logomark" src="founders-club-logomark.png" alt="Founders Club Freiburg">
+        <img class="lockup-partner-wordmark" src="founders-club-wordmark.png" alt="Founders Club Freiburg">
+      </div>
+      <div class="eyebrow">Cursor Fundamentals</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">Ways of working.</h2>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: minmax(0, 0.52fr) minmax(0, 1.48fr); gap: 28px; align-items: start; margin-top: 8px;">
+      <div style="padding-top: 20px;">
+        <div class="eyebrow" style="color: var(--accent);">Workflow</div>
+        <div class="title-s" style="margin-top: 12px;">Long-Running Async Agents</div>
+        <p style="margin-top: 12px; color: var(--muted);">Use cloud agents for extended tasks that can create PRs and handle complex multi-step work autonomously.</p>
+      </div>
+      <div style="display: flex; justify-content: flex-end;">
+        <img src="assets/Cursor Fundamentals/05_Long_Running_Async_Agents.jpeg" alt="Long-Running Async Agents in Cursor" style="width: 100%; max-width: 840px; max-height: 500px; object-fit: contain; object-position: top center; display: block;">
+      </div>
+    </div>
+
+    <div class="footer"><span class="left">Build with Cursor · Freiburg</span><span>17 / 24</span></div>
+  </div>
+  <aside class="notes">Long-Running Async Agents handle big tasks in the cloud — they merge larger PRs than regular agents.</aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 15 — Ways of Working: Automations Across the SDLC
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner-logomark" src="founders-club-logomark.png" alt="Founders Club Freiburg">
+        <img class="lockup-partner-wordmark" src="founders-club-wordmark.png" alt="Founders Club Freiburg">
+      </div>
+      <div class="eyebrow">Cursor Fundamentals</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">Ways of working.</h2>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: minmax(0, 0.52fr) minmax(0, 1.48fr); gap: 28px; align-items: start; margin-top: 8px;">
+      <div style="padding-top: 20px;">
+        <div class="eyebrow" style="color: var(--accent);">Workflow</div>
+        <div class="title-s" style="margin-top: 12px;">Automations Across the SDLC</div>
+        <p style="margin-top: 12px; color: var(--muted);">Wire always-on agents into your SDLC with custom webhooks, cron jobs, and integrations like GitHub, Slack, and Linear.</p>
+      </div>
+      <div style="display: flex; justify-content: flex-end;">
+        <img src="assets/Cursor Fundamentals/06_Automations_Across_The_SDLC.jpeg" alt="Automations Across the SDLC in Cursor" style="width: 100%; max-width: 840px; max-height: 500px; object-fit: contain; object-position: top center; display: block;">
+      </div>
+    </div>
+
+    <div class="footer"><span class="left">Build with Cursor · Freiburg</span><span>18 / 24</span></div>
+  </div>
+  <aside class="notes">Automations wire agents into your entire SDLC with webhooks, crons, Bugbot, and third-party integrations like GitHub, GitLab, Slack, and Linear.</aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 16 — 3 Need-to-Know Tips
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner-logomark" src="founders-club-logomark.png" alt="Founders Club Freiburg">
+        <img class="lockup-partner-wordmark" src="founders-club-wordmark.png" alt="Founders Club Freiburg">
+      </div>
+      <div class="eyebrow">Cursor Fundamentals</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">3 need-to-know tips.</h2>
+      <p class="lede" style="margin-top: 14px;">Concepts that pay dividends from day one.</p>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div class="row-3" style="margin-top: 30px;">
+      <div class="card">
+        <div class="num">01</div>
+        <div class="name">Semantic Search</div>
+        <div class="desc">Cursor's custom embedding model indexes your full codebase — making models smarter, faster, and conformant with existing patterns. <strong>3.4× faster</strong> than CLI agents without indexing.</div>
+      </div>
+      <div class="card">
+        <div class="num">02</div>
+        <div class="name">Plan Mode</div>
+        <div class="desc">A superpower for complex tasks. Press <span class="mono">Shift+Tab</span> in chat to align on an approach before the agent writes a single line.</div>
+      </div>
+      <div class="card">
+        <div class="num">03</div>
+        <div class="name">Skills &amp; Subagents</div>
+        <div class="desc">Build them progressively, not upfront. Use <span class="mono">/create-skill</span> or <span class="mono">/create-subagent</span> to turn work into reusable agent abilities.</div>
+      </div>
+    </div>
+
+    <div class="footer"><span class="left">Build with Cursor · Freiburg</span><span>19 / 24</span></div>
+  </div>
+  <aside class="notes">Three tips from the official Cursor fundamentals deck. Semantic Search is the biggest behind-the-scenes advantage — it makes every model call codebase-aware. Plan Mode prevents wasted tokens. Skills let you compound your setup over time without a big upfront investment.</aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 17 — Code block
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner-logomark" src="founders-club-logomark.png" alt="Founders Club Freiburg">
+        <img class="lockup-partner-wordmark" src="founders-club-wordmark.png" alt="Founders Club Freiburg">
+      </div>
+      <div class="eyebrow">Cursor Fundamentals</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">Rules: write once, apply always.</h2>
+      <p class="lede" style="margin-top: 14px;">Drop a file in <span class="mono">.cursor/rules/</span> and every prompt inherits your conventions.</p>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div class="code" style="margin-top: 24px;">
+      <div class="titlebar mono">.cursor/rules/project-conventions.md</div>
+<pre><span class="c"># Project conventions — every agent session picks these up.</span>
+<span class="k">Stack:</span>
+- TypeScript, React 19, Tailwind CSS.
+- <span class="h">No class components.</span> Functional + hooks only.
+
+<span class="k">When generating code:</span>
+- Always colocate tests next to the source file.
+- Use <span class="h">server actions</span> for mutations, never raw fetch.
+- Prefer parameterized queries. Reject string concatenation in SQL.
+
+<span class="c"># One file. Every contributor, human or AI, follows the same rules.</span></pre>
+    </div>
+
+    <div class="footer"><span class="left">Build with Cursor · Freiburg</span><span>20 / 24</span></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 18 — Comparison table
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner-logomark" src="founders-club-logomark.png" alt="Founders Club Freiburg">
+        <img class="lockup-partner-wordmark" src="founders-club-wordmark.png" alt="Founders Club Freiburg">
+      </div>
+      <div class="eyebrow">Traditional vs. Agentic</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">What actually changes.</h2>
+      <div class="accent-rule"></div>
+    </div>
+
+    <table class="cmp" style="margin-top: 30px;">
+      <thead>
+        <tr><th>Dimension</th><th>Traditional IDE</th><th>Agentic Coding</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="lbl">Context</td><td class="before">Whatever you paste into the chat</td><td class="after">Whole codebase, indexed &amp; scoped</td></tr>
+        <tr><td class="lbl">Conventions</td><td class="before">Re-explained every prompt</td><td class="after">Written once in rules, applied always</td></tr>
+        <tr><td class="lbl">Tooling</td><td class="before">Manual terminal, browser, docs</td><td class="after">Agent runs tools via MCPs</td></tr>
+        <tr><td class="lbl">Scope</td><td class="before">One file, one suggestion</td><td class="after">Multi-file changes, end to end</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout" style="margin-top: 30px;">
+      <strong>The key insight:</strong> you stop typing instructions and start defining intent. The agent handles the rest.
+    </div>
+
+    <div class="footer"><span class="left">Build with Cursor · Freiburg</span><span>21 / 24</span></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 19 — Cards grid (4 across)
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner-logomark" src="founders-club-logomark.png" alt="Founders Club Freiburg">
+        <img class="lockup-partner-wordmark" src="founders-club-wordmark.png" alt="Founders Club Freiburg">
+      </div>
+      <div class="eyebrow">Cursor Fundamentals</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">The four pillars of Cursor.</h2>
+      <p class="lede" style="margin-top: 14px;">Each one builds on the last. Together they close the loop.</p>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div class="row-4" style="margin-top: 30px;">
+      <div class="card">
+        <div class="num">01</div>
+        <div class="name">The UI</div>
+        <div class="desc">Editor + chat + terminal in one frame. No context-switching.</div>
+      </div>
+      <div class="card">
+        <div class="num">02</div>
+        <div class="name">Indexing</div>
+        <div class="desc">Your full codebase, indexed and searchable by the model.</div>
+      </div>
+      <div class="card">
+        <div class="num">03</div>
+        <div class="name">Chat Modes</div>
+        <div class="desc">Ask, Edit, Agent — pick the right level of autonomy.</div>
+      </div>
+      <div class="card">
+        <div class="num">04</div>
+        <div class="name">Models</div>
+        <div class="desc">Switch models per task. Fast for boilerplate, strong for architecture.</div>
+      </div>
+    </div>
+
+    <div class="footer"><span class="left">Build with Cursor · Freiburg</span><span>22 / 24</span></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 20 — Quote / callout
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner-logomark" src="founders-club-logomark.png" alt="Founders Club Freiburg">
+        <img class="lockup-partner-wordmark" src="founders-club-wordmark.png" alt="Founders Club Freiburg">
+      </div>
+      <div class="eyebrow">The takeaway</div>
+    </div>
+
+    <div style="margin: auto 0;">
+      <div class="eyebrow accent">One sentence to remember</div>
+      <div class="spacer-m"></div>
+      <h2 style="font-size: 64px; font-weight: 700; line-height: 1.15; max-width: 980px;">
+        "The best developers won't be replaced by AI —<br>
+        they'll be the ones who <span class="accent">learn to direct it</span>."
+      </h2>
+      <div class="spacer-l"></div>
+      <p class="body-l" style="color: var(--muted);">The shift isn't about writing less code. It's about thinking at a higher level.</p>
+    </div>
+
+    <div class="footer"><span class="left">Build with Cursor · Freiburg</span><span>23 / 24</span></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 21 — Closing (dark)
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide dark">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_DARK.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner-logomark" src="founders-club-logomark.png" alt="Founders Club Freiburg">
+        <img class="lockup-partner-wordmark" src="founders-club-wordmark.png" alt="Founders Club Freiburg">
+      </div>
+      <div class="eyebrow" style="color: var(--subtle);">Thanks</div>
+    </div>
+
+    <img class="cube-wm" src="brand/General Logos/Cube/PNG/CUBE_2D_DARK.png" alt="">
+
+    <div style="margin: auto 0;">
+      <h1 class="title-xl" style="font-size: 130px; color: var(--white);">Let's build.</h1>
+      <div class="accent-rule" style="background: var(--paper); opacity: .8; margin: 28px 0;"></div>
+      <div style="font-size: 32px; font-weight: 700; color: var(--white); line-height: 1.2; max-width: 880px;">
+        Open your laptops — it's hands-on time.<br>
+        <span style="color: var(--subtle); font-weight: 400;">Pick a project, pick a feature, and let the agent build it.</span>
+      </div>
+    </div>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between; align-items: end;">
+      <div>
+        <div style="font-size: 18px; font-weight: 600; color: var(--white);">Aniruthan Mala Elangovan</div>
+        <div style="font-size: 13px; color: var(--subtle); margin-top: 4px;">Software Engineer · SICK AG, Waldkirch</div>
+      </div>
+      <div style="text-align: right;">
+        <div class="eyebrow" style="color: var(--subtle);">Get started</div>
+        <div class="mono" style="font-size: 13px; color: var(--subtle); margin-top: 4px;">
+          cursor.com · cursor.com/changelog
+        </div>
+      </div>
+    </div>
+
+    <div class="footer"><span class="left">Build with Cursor · Freiburg</span><span>24 / 24</span></div>
+  </div>
+</section>
+
+</div>
+</div>
+
+<!-- Reveal.js bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1280,
+    height: 720,
+    margin: 0,
+    minScale: 0.2,
+    maxScale: 2.0,
+    controls: true,
+    controlsLayout: "edges",
+    progress: true,
+    slideNumber: false,
+    history: true,
+    hash: true,
+    transition: "slide",
+    transitionSpeed: "default",
+    backgroundTransition: "fade",
+    plugins: [ RevealNotes ],
+  });
+
+  const overviewBtn   = document.getElementById('btn-overview');
+  const fullscreenBtn = document.getElementById('btn-fullscreen');
+
+  overviewBtn.addEventListener('click', () => Reveal.toggleOverview());
+  Reveal.on('overviewshown', () => overviewBtn.setAttribute('aria-pressed', 'true'));
+  Reveal.on('overviewhidden', () => overviewBtn.setAttribute('aria-pressed', 'false'));
+
+  fullscreenBtn.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen?.();
+    } else {
+      document.exitFullscreen?.();
+    }
+  });
+  document.addEventListener('fullscreenchange', () => {
+    fullscreenBtn.setAttribute('aria-pressed', document.fullscreenElement ? 'true' : 'false');
+    lockLandscapeWhenPossible();
+  });
+
+  async function lockLandscapeWhenPossible() {
+    if (!document.fullscreenElement || !screen.orientation?.lock) return;
+    try {
+      await screen.orientation.lock('landscape');
+    } catch {
+      // Some mobile browsers only allow orientation changes from OS controls.
+    }
+  }
+
+  function syncDeckBackground() {
+    const current = Reveal.getCurrentSlide();
+    const isDark = !!current && !!current.querySelector('.slide.dark');
+    document.documentElement.classList.toggle('deck-dark', isDark);
+  }
+  Reveal.on('ready', syncDeckBackground);
+  Reveal.on('slidechanged', syncDeckBackground);
+</script>
+</body>
+</html>

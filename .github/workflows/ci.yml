@@ -2,20 +2,20 @@ name: Build and Publish Freiburg Slides Image
 
 on:
   push:
-    branches: ['**']
-    tags: ['*']
+    branches: ["**"]
+    tags: ["*"]
     paths:
-      - '.github/workflows/ci.yml'
-      - 'build-with-cursor-freiburg/**'
+      - ".github/workflows/ci.yml"
+      - "build-with-cursor-freiburg/**"
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
-      - '.github/workflows/ci.yml'
-      - 'build-with-cursor-freiburg/**'
+      - ".github/workflows/ci.yml"
+      - "build-with-cursor-freiburg/**"
   workflow_dispatch:
     inputs:
       publish_sha:
-        description: 'Also publish the image with the commit SHA tag'
+        description: "Also publish the image with the commit SHA tag"
         type: boolean
         default: false
 
@@ -28,6 +28,7 @@ jobs:
     env:
       DOCKER_USER: ${{ vars.DOCKERHUB_USERNAME }}
       DOCKER_REPO: ${{ vars.DOCKER_REPO_BUILD_WITH_CURSOR_FREIBURG }}
+      DOCKER_PLATFORMS: linux/amd64,linux/arm64
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -45,6 +46,9 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
 
       - name: Generate Docker tags
         id: tags
@@ -72,6 +76,7 @@ jobs:
         run: |
           docker buildx build \
             --file build-with-cursor-freiburg/Dockerfile \
+            --platform linux/amd64 \
             ${{ steps.tags.outputs.tag_args }} \
             --load \
             .
@@ -94,6 +99,7 @@ jobs:
         run: |
           docker buildx build \
             --file build-with-cursor-freiburg/Dockerfile \
+            --platform "${DOCKER_PLATFORMS}" \
             ${{ steps.tags.outputs.tag_args }} \
             --push \
             .

@@ -1343,18 +1343,18 @@
     </div>
 
     <div class="code" style="margin-top: 24px;">
-      <div class="titlebar mono">.cursor/rules/project-conventions.md</div>
-<pre><span class="c"># Project conventions — every agent session picks these up.</span>
-<span class="k">Stack:</span>
-- TypeScript, React 19, Tailwind CSS.
-- <span class="h">No class components.</span> Functional + hooks only.
+      <div class="titlebar mono">.cursor/rules/components.mdc</div>
+<pre>---
+<span class="k">globs:</span> src/components/**/*.tsx
+<span class="k">alwaysApply:</span> false
+---
 
-<span class="k">When generating code:</span>
-- Always colocate tests next to the source file.
-- Use <span class="h">server actions</span> for mutations, never raw fetch.
-- Prefer parameterized queries. Reject string concatenation in SQL.
-
-<span class="c"># One file. Every contributor, human or AI, follows the same rules.</span></pre>
+- Use named exports, not default exports
+- Co-locate styles in a module CSS file next to the component
+- Keep components under 200 lines. Extract subcomponents into the same
+  directory when a file grows beyond that
+- Prefer composition over prop drilling. Pass children or render props
+  instead of threading data through multiple layers</pre>
     </div>
 
     <div class="footer"><span class="left">Build with Cursor · Freiburg</span><span>30 / 33</span></div>

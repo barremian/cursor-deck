@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Secure Code with Cursor — Cursor × NEXO · Session 03</title>
+
+<!-- Reveal.js (CDN, pinned) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<!-- Custom theme -->
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+
+<!--
+  ───────────────────────────────────────────────────────────────────────────
+  HOW TO MAINTAIN THIS DECK
+  - Each slide is a <section class="slide">. Add/remove freely.
+  - To add a new slide, copy any existing <section> and edit the content.
+  - The chrome (logo + eyebrow + footer) is set per-slide via {{eyebrow}} and {{n}}.
+  - All colors live in theme.css under :root.
+  - Run `npm run present` (or open this file in a browser).
+  - Press F to fullscreen, S for speaker view, ESC for slide overview.
+  - Print to PDF: open `?print-pdf` (e.g. file://.../index.html?print-pdf), then File → Print.
+  ───────────────────────────────────────────────────────────────────────────
+-->
+
+<!-- Presentation toolbar: overview (show all) + fullscreen toggles. Icon-only, bottom-left, fades in on hover so it never covers the chrome eyebrow. -->
+<div class="deck-toolbar" role="toolbar" aria-label="Presentation controls">
+  <button id="btn-overview" type="button" aria-pressed="false" title="Show all slides (O)" aria-label="Show all slides">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+      <rect x="1.5" y="1.5" width="5" height="5"/>
+      <rect x="9.5" y="1.5" width="5" height="5"/>
+      <rect x="1.5" y="9.5" width="5" height="5"/>
+      <rect x="9.5" y="9.5" width="5" height="5"/>
+    </svg>
+  </button>
+  <button id="btn-fullscreen" type="button" aria-pressed="false" title="Toggle fullscreen (F)" aria-label="Toggle fullscreen">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+      <path d="M2 6V2h4M14 6V2h-4M2 10v4h4M14 10v4h-4"/>
+    </svg>
+  </button>
+</div>
+
+<div class="orientation-guard" role="status" aria-live="polite">
+  <div class="orientation-guard__icon" aria-hidden="true">
+    <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8">
+      <rect x="5" y="8" width="18" height="12" rx="2"/>
+      <path d="M8 4h6a10 10 0 0 1 10 10v1"/>
+      <path d="M22 13l2 2 2-2"/>
+    </svg>
+  </div>
+  <div class="orientation-guard__title">Rotate your phone</div>
+  <div class="orientation-guard__copy">This presentation is optimized for landscape mode.</div>
+</div>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 1 — Title (dark cover)
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide dark">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_DARK.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner" src="partner.png" alt="Fundación NEXO">
+      </div>
+      <div class="eyebrow">Session 03 · Security</div>
+    </div>
+
+    <img class="cube-wm" src="brand/General Logos/Cube/PNG/CUBE_2D_DARK.png" alt="">
+
+    <div style="margin-top: 110px;">
+      <div class="eyebrow" style="color: var(--paper); opacity: .7;">A hands-on session</div>
+      <div class="spacer-m"></div>
+      <h1 class="title-xl" style="color: var(--white);">
+        Secure Code<br>with Cursor.
+      </h1>
+      <div class="spacer-m"></div>
+      <p class="lede" style="color: var(--subtle);">How not to ship vulnerabilities to production.</p>
+      <div class="accent-rule" style="background: var(--paper); opacity: .8;"></div>
+    </div>
+
+    <div style="margin-top: auto; display: flex; justify-content: space-between; align-items: end;">
+      <div>
+        <div style="font-size: 18px; font-weight: 600; color: var(--white);">Niccolò Mascaro</div>
+        <div style="font-size: 13px; color: var(--subtle); margin-top: 4px;">Cursor Ambassador · LATAM</div>
+      </div>
+      <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 10px;">
+        <img class="partner-logo" src="partner.png" alt="Fundación NEXO">
+        <div class="mono" style="font-size: 12px; color: var(--subtle); letter-spacing: 0.18em;">APRIL 2026</div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">
+    Welcome. 10 minutes of setup, 80% of risk eliminated. Keep the energy high.
+  </aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 2 — Agenda
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner" src="partner.png" alt="Fundación NEXO">
+      </div>
+      <div class="eyebrow">Agenda</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">What we're going to do.</h2>
+      <p class="lede" style="margin-top: 14px;">Ten minutes of setup. 80% of risk eliminated.</p>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div style="margin-top: 12px;">
+      <div class="row-step">
+        <div class="num">01</div>
+        <div><div class="h">Who you are</div><div class="s">28 responses. The data drives the session.</div></div>
+      </div>
+      <div class="row-step">
+        <div class="num">02</div>
+        <div><div class="h">The problem</div><div class="s">45% of AI-generated code fails basic security tests.</div></div>
+      </div>
+      <div class="row-step">
+        <div class="num">03</div>
+        <div><div class="h">The security sandwich</div><div class="s">Three layers that complement each other.</div></div>
+      </div>
+      <div class="row-step">
+        <div class="num">04</div>
+        <div><div class="h">Layer 1 · Cursor Rules</div><div class="s">Write it once. Cursor respects it always.</div></div>
+      </div>
+      <div class="row-step">
+        <div class="num">05</div>
+        <div><div class="h">Layer 2 · A prompt</div><div class="s">Copy and paste.</div></div>
+      </div>
+      <div class="row-step">
+        <div class="num">06</div>
+        <div><div class="h">Layer 3 · Semgrep MCP</div><div class="s">A scanner you connect once.</div></div>
+      </div>
+      <div class="row-step last">
+        <div class="num">07</div>
+        <div><div class="h">Live demo</div><div class="s">We break an app and fix it.</div></div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span class="left">Cursor × NEXO · Session 03 · Security</span>
+      <span>02 / 23</span>
+    </div>
+  </div>
+  <aside class="notes">7 sections, fast pace. The demo is the climax.</aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 3 — Who you are · 28 responses
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner" src="partner.png" alt="Fundación NEXO">
+      </div>
+      <div class="eyebrow">Who you are</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">28 responses. Triple the sample.</h2>
+      <p class="lede" style="margin-top: 14px;">The signal is more reliable. We designed this session based on what you asked for.</p>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div class="row-4" style="margin-top: 30px;">
+      <div class="stat"><div class="big">28</div>  <div class="label">responses received</div><div class="sub">25 ES + 3 EN</div></div>
+      <div class="stat"><div class="big">50%</div> <div class="label">attended both sessions</div><div class="sub">loyal audience</div></div>
+      <div class="stat"><div class="big">57%</div> <div class="label">beginner-level in security</div><div class="sub">the largest group</div></div>
+      <div class="stat"><div class="big">71%</div> <div class="label">founders + developers</div><div class="sub">hands-on audience</div></div>
+    </div>
+
+    <p class="attribution center" style="margin-top: 30px;">Cursor × NEXO · Pre-session Security Survey</p>
+
+    <div class="footer"><span class="left">Cursor × NEXO · Session 03 · Security</span><span>03 / 23</span></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 4 — Profile (bars)
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner" src="partner.png" alt="Fundación NEXO">
+      </div>
+      <div class="eyebrow">Profile</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">Founders up front. Devs right behind.</h2>
+      <p class="lede" style="margin-top: 14px;">Mid-level in AI. Beginners in security. Exactly the space where this session delivers value.</p>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div class="row-2" style="margin-top: 28px;">
+      <div>
+        <div class="eyebrow">Role</div>
+        <div class="spacer-s"></div>
+        <div class="bar-row"><div class="label">Entrepreneur / Founder</div><div class="pct">39%</div></div>
+        <div class="bar-track"><div class="bar-fill dark" style="width: 39%;"></div></div>
+        <div class="bar-row"><div class="label">Developer</div><div class="pct">32%</div></div>
+        <div class="bar-track"><div class="bar-fill dark" style="width: 32%;"></div></div>
+        <div class="bar-row"><div class="label">Student</div><div class="pct">18%</div></div>
+        <div class="bar-track"><div class="bar-fill dark" style="width: 18%;"></div></div>
+        <div class="bar-row"><div class="label">Designer</div><div class="pct">7%</div></div>
+        <div class="bar-track"><div class="bar-fill dark" style="width: 7%;"></div></div>
+        <div class="bar-row"><div class="label">Other</div><div class="pct">4%</div></div>
+        <div class="bar-track"><div class="bar-fill dark" style="width: 4%;"></div></div>
+      </div>
+      <div>
+        <div class="eyebrow">Security knowledge</div>
+        <div class="spacer-s"></div>
+        <div class="bar-row"><div class="label">Basic</div><div class="pct">57%</div></div>
+        <div class="bar-track"><div class="bar-fill" style="width: 57%;"></div></div>
+        <div class="bar-row"><div class="label">Intermediate (SQLi, XSS…)</div><div class="pct">29%</div></div>
+        <div class="bar-track"><div class="bar-fill" style="width: 29%;"></div></div>
+        <div class="bar-row"><div class="label">None — new topic</div><div class="pct">11%</div></div>
+        <div class="bar-track"><div class="bar-fill" style="width: 11%;"></div></div>
+        <div class="bar-row"><div class="label">Advanced</div><div class="pct">4%</div></div>
+        <div class="bar-track"><div class="bar-fill" style="width: 4%;"></div></div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 24px;">
+      <strong>68% are beginner or new to security.</strong> We'll go slow, no assumptions.
+    </div>
+
+    <div class="footer"><span class="left">Cursor × NEXO · Session 03 · Security</span><span>04 / 23</span></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 5 — In their words (mega stat)
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide dark">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_DARK.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner" src="partner.png" alt="Fundación NEXO">
+      </div>
+      <div class="eyebrow" style="color: var(--subtle);">In their words</div>
+    </div>
+
+    <div style="margin-top: 60px;">
+      <div class="eyebrow" style="color: var(--subtle);">What keeps them up at night</div>
+      <div class="spacer-l"></div>
+    </div>
+
+    <div class="row-2" style="gap: 60px;">
+      <div>
+        <div style="font-size: 200px; font-weight: 700; line-height: 0.9; color: var(--white); letter-spacing: -0.05em;">61%</div>
+        <div class="accent-rule" style="background: var(--paper); opacity: .8;"></div>
+        <div style="font-size: 32px; font-weight: 700; color: var(--white); line-height: 1.15;">
+          fear the flaws<br>they can't see.
+        </div>
+      </div>
+      <div style="margin-top: 30px;">
+        <div class="bar-row" style="color: var(--white);">
+          <div class="label" style="color: var(--white); font-weight: 700;">Vulnerabilities I can't detect</div>
+          <div class="pct" style="color: var(--white);">61%</div>
+        </div>
+        <div class="bar-track" style="background: #2A2820;"><div class="bar-fill" style="background: var(--paper); width: 61%;"></div></div>
+
+        <div class="bar-row" style="color: var(--subtle);">
+          <div class="label" style="color: var(--subtle);">Blindly trusting AI-generated code</div>
+          <div class="pct" style="color: var(--subtle);">18%</div>
+        </div>
+        <div class="bar-track" style="background: #2A2820;"><div class="bar-fill" style="background: var(--subtle); width: 18%;"></div></div>
+
+        <div class="bar-row" style="color: var(--subtle);">
+          <div class="label" style="color: var(--subtle);">Not understanding what the code does</div>
+          <div class="pct" style="color: var(--subtle);">11%</div>
+        </div>
+        <div class="bar-track" style="background: #2A2820;"><div class="bar-fill" style="background: var(--subtle); width: 11%;"></div></div>
+
+        <div class="bar-row" style="color: var(--subtle);">
+          <div class="label" style="color: var(--subtle);">Exposing sensitive user data</div>
+          <div class="pct" style="color: var(--subtle);">11%</div>
+        </div>
+        <div class="bar-track" style="background: #2A2820;"><div class="bar-fill" style="background: var(--subtle); width: 11%;"></div></div>
+      </div>
+    </div>
+
+    <p class="lede center" style="color: var(--subtle); margin-top: 28px;">Start with "here's how you detect the invisible" and you'll nail it.</p>
+
+    <div class="footer"><span class="left">Cursor × NEXO · Session 03 · Security</span><span>05 / 23</span></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 6 — Real projects (3×3)
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner" src="partner.png" alt="Fundación NEXO">
+      </div>
+      <div class="eyebrow">Real projects</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">Real projects, not exercises.</h2>
+      <p class="lede" style="margin-top: 14px;">Every example today maps to at least one of these contexts.</p>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div class="grid-3x3" style="margin-top: 22px;">
+      <div class="project"><div class="name">Jaime</div><div class="desc">WhatsApp agent for logging sales and purchases.</div></div>
+      <div class="project"><div class="name">Helmut</div><div class="desc">AI + embedded systems for the livestock industry.</div></div>
+      <div class="project"><div class="name">Keduards</div><div class="desc">Virtual closet with outfit suggestions.</div></div>
+      <div class="project"><div class="name">Linder</div><div class="desc">App for scheduling appointments with therapists.</div></div>
+      <div class="project"><div class="name">John Fredy</div><div class="desc">Trading bot for binary options.</div></div>
+      <div class="project"><div class="name">Rafael</div><div class="desc">Agency: digital transformation + cybersecurity.</div></div>
+      <div class="project"><div class="name">Maria P.</div><div class="desc">Mentoring and scheduling platform.</div></div>
+      <div class="project"><div class="name">Juan B.</div><div class="desc">Budgeting + calendar chatbot for SMBs.</div></div>
+      <div class="project"><div class="name">Mauro</div><div class="desc">Automated social media content generation.</div></div>
+    </div>
+
+    <p class="attribution center" style="margin-top: 22px;">NEXO Pre-session Survey · 12 projects described</p>
+
+    <div class="footer"><span class="left">Cursor × NEXO · Session 03 · Security</span><span>06 / 23</span></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 7 — Transition (dark)
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide dark">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_DARK.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner" src="partner.png" alt="Fundación NEXO">
+      </div>
+      <div class="eyebrow" style="color: var(--subtle);">Transition</div>
+    </div>
+
+    <div style="margin: auto 0;">
+      <div class="eyebrow" style="color: var(--subtle);">So</div>
+      <div class="accent-rule" style="background: var(--paper); opacity: .8;"></div>
+      <div style="font-size: 64px; font-weight: 700; line-height: 1.15; color: var(--subtle); letter-spacing: -0.025em;">
+        We're not going to become <span style="color: var(--white);">security engineers.</span><br>
+        We're going to stop <span style="color: var(--white);">Cursor</span><br>
+        from getting us in trouble.
+      </div>
+      <div class="spacer-l"></div>
+      <p class="lede" style="color: var(--subtle); font-size: 18px;">Ten minutes of setup. · Three layers. · 80% of risk eliminated.</p>
+    </div>
+
+    <div class="footer"><span class="left">Cursor × NEXO · Session 03 · Security</span><span>07 / 23</span></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 8 — The problem (mega stat)
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner" src="partner.png" alt="Fundación NEXO">
+      </div>
+      <div class="eyebrow">The problem</div>
+    </div>
+
+    <div class="megastat" style="margin: auto 0;">
+      <div class="num">45%</div>
+      <div class="copy">
+        <div class="body-l" style="color: var(--muted);">of AI-generated code</div>
+        <h2 style="font-size: 56px; line-height: 1.05; margin-top: 6px;">fails basic<br>security tests.</h2>
+        <div class="accent-rule"></div>
+        <div class="src">Veracode · 2025 GenAI Code Security Report</div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 30px;">
+      Yes, the AI wrote it.&nbsp;&nbsp;<strong>No, you can't blame it once it hits production.</strong>
+    </div>
+
+    <div class="footer"><span class="left">Cursor × NEXO · Session 03 · Security</span><span>08 / 23</span></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 9 — The 3 traps
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner" src="partner.png" alt="Fundación NEXO">
+      </div>
+      <div class="eyebrow">The 3 traps</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">What Cursor generates without thinking.</h2>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div class="row-3" style="margin-top: 28px; gap: 22px;">
+      <div class="card">
+        <div class="num">01</div>
+        <div class="name">Auth that doesn't validate</div>
+        <div class="desc">Endpoints that trust the client-supplied ID. Anyone can edit anyone.</div>
+      </div>
+      <div class="card">
+        <div class="num">02</div>
+        <div class="name">Prompt injection</div>
+        <div class="desc">User input goes straight into the LLM prompt. Your bio becomes the system message.</div>
+      </div>
+      <div class="card">
+        <div class="num">03</div>
+        <div class="name">Hardcoded secrets</div>
+        <div class="desc">JWT "secret123", API keys in source, tokens in logs. Pushed to a public repo.</div>
+      </div>
+    </div>
+
+    <div class="footer"><span class="left">Cursor × NEXO · Session 03 · Security</span><span>09 / 23</span></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 10 — The thesis (3 step diagram)
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner" src="partner.png" alt="Fundación NEXO">
+      </div>
+      <div class="eyebrow">The thesis</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <div class="eyebrow">The thesis</div>
+      <h2 class="title-l" style="margin-top: 8px;">The security sandwich.</h2>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div class="row-3" style="margin-top: 28px; align-items: stretch; gap: 22px;">
+      <div class="card">
+        <div class="num">01</div>
+        <div class="eyebrow">Before</div>
+        <h3 class="title-m" style="margin-top: 6px;">Rules</h3>
+        <div class="accent-rule" style="margin: 12px 0;"></div>
+        <div class="desc">Cursor reads the rules before writing the first line.</div>
+      </div>
+      <div class="card">
+        <div class="num">02</div>
+        <div class="eyebrow">During</div>
+        <h3 class="title-m" style="margin-top: 6px;">Prompts</h3>
+        <div class="accent-rule" style="margin: 12px 0;"></div>
+        <div class="desc">The agent thinks about threats before touching the code.</div>
+      </div>
+      <div class="card">
+        <div class="num">03</div>
+        <div class="eyebrow">After</div>
+        <h3 class="title-m" style="margin-top: 6px;">Scan</h3>
+        <div class="accent-rule" style="margin: 12px 0;"></div>
+        <div class="desc">Semgrep reviews what was written and demands fixes.</div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 26px;">
+      Three layers. · Ten minutes of setup. · <strong>80% of risk eliminated.</strong>
+    </div>
+
+    <div class="footer"><span class="left">Cursor × NEXO · Session 03 · Security</span><span>10 / 23</span></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 11 — Layer 01 · Cursor Rules
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner" src="partner.png" alt="Fundación NEXO">
+      </div>
+      <div class="eyebrow">Layer 01 · Rules</div>
+    </div>
+
+    <div class="row-2" style="margin-top: 24px; gap: 36px; align-items: start;">
+      <div>
+        <div><span class="mono accent" style="font-weight: 700;">01</span> &nbsp;<span class="eyebrow">Before</span></div>
+        <h2 class="title-m" style="margin-top: 4px;">Cursor Rules.</h2>
+        <p class="lede" style="margin-top: 6px;">Paste once. Cursor respects them always.</p>
+        <div class="accent-rule" style="margin: 10px 0 14px;"></div>
+
+        <div class="row-step">
+          <div class="num">01</div>
+          <div><div class="h">Create the folder</div><div class="s">.cursor/rules/</div></div>
+        </div>
+        <div class="row-step">
+          <div class="num">02</div>
+          <div><div class="h">Inside, create the file</div><div class="s">security.mdc</div></div>
+        </div>
+        <div class="row-step last">
+          <div class="num">03</div>
+          <div><div class="h">Paste the rules</div><div class="s">→</div></div>
+        </div>
+      </div>
+      <div class="code">
+        <div class="titlebar">security.mdc</div>
+<pre><span class="c">---</span>
+<span class="k">description:</span> Security baseline
+<span class="k">alwaysApply:</span> true
+<span class="c">---</span>
+
+<span class="h"># Auth</span>
+- Validate the server session,
+  NEVER trust the client.
+- user.id == session.user.id
+- Secrets: process.env, never
+  hardcoded.
+- JWT: exp &lt;= 15m, explicit alg.
+
+<span class="h"># Prompt injection</span>
+- NEVER interpolate user input
+  into system prompts.
+- Separate role:system / role:user.</pre>
+      </div>
+    </div>
+
+    <div class="footer"><span class="left">Cursor × NEXO · Session 03 · Security</span><span>11 / 23</span></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 12 — Layer 02 · Prompt
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner" src="partner.png" alt="Fundación NEXO">
+      </div>
+      <div class="eyebrow">Layer 02 · Prompt</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <div><span class="mono accent" style="font-weight: 700;">02</span> &nbsp;<span class="eyebrow">During</span></div>
+      <h2 class="title-l" style="margin-top: 6px;">A prompt you can copy.</h2>
+      <p class="lede" style="margin-top: 8px;">Paste it before requesting sensitive features: login · payments · uploads · auth.</p>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div class="card left-stripe" style="margin-top: 22px; background: var(--paper); padding: 28px 32px;">
+      <em style="font-size: 18px;">Before writing the code:</em>
+      <div class="spacer-m"></div>
+      <div style="display: grid; grid-template-columns: 36px 1fr; row-gap: 18px; align-items: baseline;">
+        <div class="mono accent" style="font-size: 22px; font-weight: 700;">1.</div>
+        <div style="font-size: 20px;">List the <strong>5 most common security risks</strong> for this type of feature.</div>
+        <div class="mono accent" style="font-size: 22px; font-weight: 700;">2.</div>
+        <div style="font-size: 20px;">Show me <strong>how you mitigate them</strong> (library, validation, config).</div>
+        <div class="mono accent" style="font-size: 22px; font-weight: 700;">3.</div>
+        <div style="font-size: 20px;"><strong>Only then</strong>, write the code.</div>
+      </div>
+    </div>
+
+    <p class="lede center" style="margin-top: 26px; font-size: 16px;">
+      If you have Rules, append <span class="mono" style="color: var(--ink); font-weight: 700;">"…following security.mdc"</span> at the end.
+    </p>
+
+    <div class="footer"><span class="left">Cursor × NEXO · Session 03 · Security</span><span>12 / 23</span></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 13 — Layer 03 · MCP
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner" src="partner.png" alt="Fundación NEXO">
+      </div>
+      <div class="eyebrow">Layer 03 · MCP</div>
+    </div>
+
+    <div class="row-2" style="margin-top: 24px; gap: 36px; align-items: start;">
+      <div>
+        <div><span class="mono accent" style="font-weight: 700;">03</span> &nbsp;<span class="eyebrow">After</span></div>
+        <h2 class="title-m" style="margin-top: 4px;">Semgrep MCP.</h2>
+        <p class="lede" style="margin-top: 6px;">A scanner you connect once. Cursor calls it on its own.</p>
+        <div class="accent-rule" style="margin: 10px 0 14px;"></div>
+
+        <div class="row-step">
+          <div class="num">01</div>
+          <div><div class="h">Create the file</div><div class="s">.cursor/mcp.json</div></div>
+        </div>
+        <div class="row-step">
+          <div class="num">02</div>
+          <div><div class="h">Free token at</div><div class="s">semgrep.dev/login</div></div>
+        </div>
+        <div class="row-step last">
+          <div class="num">03</div>
+          <div><div class="h">Settings → MCP → Refresh</div><div class="s">"scan it with Semgrep"</div></div>
+        </div>
+      </div>
+      <div class="code">
+        <div class="titlebar">.cursor/mcp.json</div>
+<pre>{
+  <span class="k">"mcpServers"</span>: {
+    <span class="k">"semgrep"</span>: {
+      <span class="k">"command"</span>: <span class="s">"uvx"</span>,
+      <span class="k">"args"</span>: [<span class="s">"semgrep-mcp"</span>],
+      <span class="k">"env"</span>: {
+        <span class="k">"SEMGREP_APP_TOKEN"</span>:
+        <span class="s">"&lt;your-token&gt;"</span>
+      }
+    }
+  }
+}
+
+<span class="c"># Bonus: Cursor Hooks
+# run Semgrep automatically
+# after every edit.</span></pre>
+      </div>
+    </div>
+
+    <div class="footer"><span class="left">Cursor × NEXO · Session 03 · Security</span><span>13 / 23</span></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 14 — Clone the repo (pre-demo setup)
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner" src="partner.png" alt="Fundación NEXO">
+      </div>
+      <div class="eyebrow">Setup · follow along</div>
+    </div>
+
+    <div class="row-2" style="margin-top: 24px; gap: 36px; align-items: start;">
+      <div>
+        <div><span class="mono accent" style="font-weight: 700;">⌘</span> &nbsp;<span class="eyebrow">Before the demo</span></div>
+        <h2 class="title-m" style="margin-top: 4px;">Clone the repo.</h2>
+        <p class="lede" style="margin-top: 6px;">So you can follow the demo in your editor — and take it home.</p>
+        <div class="accent-rule" style="margin: 10px 0 14px;"></div>
+
+        <div class="row-step">
+          <div class="num">01</div>
+          <div><div class="h">Clone the repo</div><div class="s">github.com/mascarock/cursor-webinar-sec</div></div>
+        </div>
+        <div class="row-step">
+          <div class="num">02</div>
+          <div><div class="h">Open it in Cursor</div><div class="s">cursor cursor-webinar-sec</div></div>
+        </div>
+        <div class="row-step last">
+          <div class="num">03</div>
+          <div><div class="h">Follow the demo steps</div><div class="s">rules · prompt · scan</div></div>
+        </div>
+      </div>
+
+      <div class="code">
+        <div class="titlebar">terminal</div>
+<pre><span class="c"># 1 · clone the repo</span>
+<span class="k">$</span> git clone <span class="s">https://github.com/\
+  mascarock/cursor-webinar-sec</span>
+
+<span class="c"># 2 · enter and open in Cursor</span>
+<span class="k">$</span> <span class="k">cd</span> cursor-webinar-sec
+<span class="k">$</span> cursor .
+
+<span class="c"># 3 · ready — follow along live</span>
+<span class="h"># app/api/profile/[id]/route.ts</span>
+<span class="h"># .cursor/rules/security.mdc</span>
+<span class="h"># .cursor/mcp.json</span></pre>
+      </div>
+    </div>
+
+    <div class="footer"><span class="left">Cursor × NEXO · Session 03 · Security</span><span>14 / 23</span></div>
+  </div>
+  <aside class="notes">
+    Pause before the demo. Ask them to clone now — so they can follow in their editor. URL: github.com/mascarock/cursor-webinar-sec.
+  </aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 15 — Demo · The victim
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner" src="partner.png" alt="Fundación NEXO">
+      </div>
+      <div class="eyebrow">Demo · The victim</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">The victim app.</h2>
+      <p class="lede" style="margin-top: 14px;">A real NestJS login, generated with no thought given to security.</p>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div class="row-2" style="margin-top: 22px; grid-template-columns: 2fr 1fr; gap: 28px;">
+      <div class="code">
+        <div class="titlebar">backend/src/auth/auth.service.ts</div>
+<pre><span class="k">async</span> login(username: <span class="k">any</span>, password: <span class="k">any</span>) {
+  <span class="c">// Input goes straight to Mongo — NoSQL injection</span>
+  <span class="k">return</span> <span class="k">this</span>.db.collection(<span class="s">'users'</span>)
+    .findOne({ username, password });
+}
+
+<span class="k">async</span> register(username: <span class="k">any</span>, password: <span class="k">any</span>) {
+  <span class="c">// Plaintext password, no bcrypt</span>
+  <span class="k">await</span> <span class="k">this</span>.db.collection(<span class="s">'users'</span>)
+    .insertOne({ username, password });
+}</pre>
+      </div>
+      <div>
+        <div class="eyebrow">3 bugs in 10 lines</div>
+        <div class="spacer-s"></div>
+        <div class="bug" style="margin-top: 12px;"><div class="n">01</div><div class="t">NoSQL Injection</div></div>
+        <div class="bug" style="margin-top: 10px;"><div class="n">02</div><div class="t">Plaintext passwords</div></div>
+        <div class="bug" style="margin-top: 10px;"><div class="n">03</div><div class="t">No input validation</div></div>
+      </div>
+    </div>
+
+    <div class="footer"><span class="left">Cursor × NEXO · Session 03 · Security</span><span>15 / 23</span></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 16 — Demo · Guide
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner" src="partner.png" alt="Fundación NEXO">
+      </div>
+      <div class="eyebrow">Demo · Guide</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">The 4 steps.</h2>
+      <p class="lede" style="margin-top: 14px;">From broken code to defended code — live.</p>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div class="stack" style="margin-top: 20px; gap: 12px;">
+      <div class="card left-stripe" style="display: grid; grid-template-columns: 60px 280px 1fr; align-items: center; gap: 18px;">
+        <div class="mono accent" style="font-size: 22px; font-weight: 700;">01</div>
+        <div style="font-size: 14px; font-weight: 700; letter-spacing: 0.1em;">BREAK THE APP</div>
+        <div class="body">Curl with bio "IGNORE ALL..." to /profile/other-user. We see the real damage.</div>
+      </div>
+      <div class="card left-stripe" style="display: grid; grid-template-columns: 60px 280px 1fr; align-items: center; gap: 18px;">
+        <div class="mono accent" style="font-size: 22px; font-weight: 700;">02</div>
+        <div style="font-size: 14px; font-weight: 700; letter-spacing: 0.1em;">APPLY LAYER 1 — RULES</div>
+        <div class="body">Create security.mdc. Ask Cursor to regenerate the endpoint.</div>
+      </div>
+      <div class="card left-stripe" style="display: grid; grid-template-columns: 60px 280px 1fr; align-items: center; gap: 18px;">
+        <div class="mono accent" style="font-size: 22px; font-weight: 700;">03</div>
+        <div style="font-size: 14px; font-weight: 700; letter-spacing: 0.1em;">APPLY LAYER 2 — PROMPT</div>
+        <div class="body">List threats, mitigate, then write. Validation + role separation.</div>
+      </div>
+      <div class="card left-stripe" style="display: grid; grid-template-columns: 60px 280px 1fr; align-items: center; gap: 18px;">
+        <div class="mono accent" style="font-size: 22px; font-weight: 700;">04</div>
+        <div style="font-size: 14px; font-weight: 700; letter-spacing: 0.1em;">APPLY LAYER 3 — SEMGREP</div>
+        <div class="body">Cursor calls Semgrep, finds what we missed, auto-fixes.</div>
+      </div>
+    </div>
+
+    <div class="footer"><span class="left">Cursor × NEXO · Session 03 · Security</span><span>16 / 23</span></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 17 — Before / After
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner" src="partner.png" alt="Fundación NEXO">
+      </div>
+      <div class="eyebrow">Before / After</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">Before / After.</h2>
+      <p class="lede" style="margin-top: 14px;">The same 16 lines, with all 3 layers active.</p>
+      <div class="accent-rule"></div>
+    </div>
+
+    <table class="cmp" style="margin-top: 22px;">
+      <thead><tr><th>Vulnerability</th><th>Before</th><th>After</th></tr></thead>
+      <tbody>
+        <tr><td class="lbl">Auth / IDOR</td>          <td class="before">Anyone can edit anyone</td>       <td class="after">session.user.id == id</td></tr>
+        <tr><td class="lbl">Prompt Injection</td>     <td class="before">Bio goes straight into prompt</td><td class="after">fixed role:system + bio as data</td></tr>
+        <tr><td class="lbl">JWT secret</td>           <td class="before">"secret123" forever</td>          <td class="after">env, 64 chars, exp 15min</td></tr>
+        <tr><td class="lbl">Input validation</td>    <td class="before">None</td>                          <td class="after">zod schema per endpoint</td></tr>
+        <tr><td class="lbl">Rate limiting</td>       <td class="before">None</td>                          <td class="after">5/min per IP</td></tr>
+        <tr><td class="lbl">Secret logging</td>      <td class="before">console.log(req.body)</td>         <td class="after">password field redacted</td></tr>
+      </tbody>
+    </table>
+
+    <div class="footer"><span class="left">Cursor × NEXO · Session 03 · Security</span><span>17 / 23</span></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 18 — Takeaways
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner" src="partner.png" alt="Fundación NEXO">
+      </div>
+      <div class="eyebrow">Takeaways</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <h2 class="title-l">Three things that save your day.</h2>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div class="row-3" style="margin-top: 28px; gap: 22px;">
+      <div class="card">
+        <div class="num">01</div>
+        <div class="name" style="font-size: 18px;">A Rules file</div>
+        <div class="mono" style="font-size: 13px; color: var(--muted); margin-top: 6px;">.cursor/rules/security.mdc</div>
+        <div class="accent-rule" style="margin: 14px 0 12px;"></div>
+        <div class="desc">Paste it once. Cursor respects it always.</div>
+      </div>
+      <div class="card">
+        <div class="num">02</div>
+        <div class="name" style="font-size: 18px;">A prompt before writing</div>
+        <div class="mono" style="font-size: 13px; color: var(--muted); margin-top: 6px;">List the 5 risks. Mitigate. Then write.</div>
+        <div class="accent-rule" style="margin: 14px 0 12px;"></div>
+        <div class="desc">The agent thinks about threats before touching the code.</div>
+      </div>
+      <div class="card">
+        <div class="num">03</div>
+        <div class="name" style="font-size: 18px;">An MCP that scans</div>
+        <div class="mono" style="font-size: 13px; color: var(--muted); margin-top: 6px;">Semgrep runs on its own.</div>
+        <div class="accent-rule" style="margin: 14px 0 12px;"></div>
+        <div class="desc">If anything slipped through, Cursor catches it and fixes it.</div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 26px;">
+      Ten minutes of setup. · Three layers. · <strong>80% of risk eliminated.</strong>
+    </div>
+
+    <div class="footer"><span class="left">Cursor × NEXO · Session 03 · Security</span><span>18 / 23</span></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 19 — The Challenge (announcement)
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner" src="partner.png" alt="Fundación NEXO">
+      </div>
+      <div class="eyebrow">The Challenge · 5 days</div>
+    </div>
+
+    <div style="margin-top: 50px;">
+      <div><span class="mono accent" style="font-weight: 700;">⏱</span> &nbsp;<span class="eyebrow">Countdown</span></div>
+      <h2 class="title-xl" style="margin-top: 6px; font-size: 110px; line-height: 1.02;">You have 5 days.</h2>
+      <p class="lede" style="margin-top: 14px; font-size: 26px;">
+        Until <strong>Thursday, April 30</strong> to complete the challenge.
+      </p>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div class="card left-stripe" style="margin-top: 28px; background: var(--paper); padding: 28px 32px;">
+      <div class="eyebrow">Wait… what challenge?</div>
+      <div class="spacer-s"></div>
+      <div style="font-size: 22px; line-height: 1.5;">
+        Three paths. You pick one — we'll explain on the next slide.
+      </div>
+      <div class="spacer-m"></div>
+      <div class="mono" style="font-size: 14px; color: var(--muted);">
+        Not a developer? No problem. Marketers, designers, PMs — everyone is welcome.
+      </div>
+    </div>
+
+    <div class="footer"><span class="left">Cursor × NEXO · Session 03 · Security</span><span>19 / 23</span></div>
+  </div>
+  <aside class="notes">
+    Raise the energy: there's a challenge, a deadline, and a prize. Make it clear you don't need to be a developer — marketers, designers, and PMs can participate too.
+  </aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 20 — The 3 challenges
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner" src="partner.png" alt="Fundación NEXO">
+      </div>
+      <div class="eyebrow">The Challenge · pick one</div>
+    </div>
+
+    <div style="margin-top: 40px;">
+      <h2 class="title-l">Pick your challenge.</h2>
+      <p class="lede" style="margin-top: 10px;">Any one. Whichever appeals to you most. Whichever scares you most.</p>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div class="row-3" style="margin-top: 24px; gap: 22px;">
+      <div class="card">
+        <div class="num">01</div>
+        <div class="name" style="font-size: 18px;">Build a security tool</div>
+        <div class="mono" style="font-size: 13px; color: var(--muted); margin-top: 6px;">to integrate with Cursor</div>
+        <div class="accent-rule" style="margin: 14px 0 12px;"></div>
+        <div class="desc">A plugin, an MCP, a script — whatever you can think of. Be creative.</div>
+      </div>
+      <div class="card">
+        <div class="num">02</div>
+        <div class="name" style="font-size: 18px;">Build an app using all 3 layers</div>
+        <div class="mono" style="font-size: 13px; color: var(--muted); margin-top: 6px;">from scratch · or fork "family expenses"</div>
+        <div class="accent-rule" style="margin: 14px 0 12px;"></div>
+        <div class="desc">The idea is yours. The requirement: Rules + prompt + MCP in place.</div>
+      </div>
+      <div class="card">
+        <div class="num">03</div>
+        <div class="name" style="font-size: 18px;">Find security flaws</div>
+        <div class="mono" style="font-size: 13px; color: var(--muted); margin-top: 6px;">and fix them with Cursor</div>
+        <div class="accent-rule" style="margin: 14px 0 12px;"></div>
+        <div class="desc">Audit a project, detect bugs, fix them. All 3 layers in action.</div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 24px;">
+      Not an engineer? · Marketers, designers, PMs — <strong>you're in too.</strong> · There's a challenge for everyone.
+    </div>
+
+    <div class="footer"><span class="left">Cursor × NEXO · Session 03 · Security</span><span>20 / 23</span></div>
+  </div>
+  <aside class="notes">
+    Walk through the 3 challenges one by one. Remind them: pick just ONE. And it's not just for devs — a marketer can build an MCP, a PM can add a feature, a designer can audit security UX.
+  </aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 21 — Prize + next session
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_LIGHT.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner" src="partner.png" alt="Fundación NEXO">
+      </div>
+      <div class="eyebrow">The Challenge · prize + judges</div>
+    </div>
+
+    <div style="margin-top: 40px;">
+      <h2 class="title-l">There's a prize. And a stage.</h2>
+      <p class="lede" style="margin-top: 10px;">The best project wins the prize — and a slot to present it at the next session.</p>
+      <div class="accent-rule"></div>
+    </div>
+
+    <div class="row-3" style="margin-top: 26px; gap: 22px;">
+      <div class="card">
+        <div class="num">01</div>
+        <div class="name" style="font-size: 18px;">How to submit</div>
+        <div class="mono" style="font-size: 13px; color: var(--muted); margin-top: 6px;">form · platform</div>
+        <div class="accent-rule" style="margin: 14px 0 12px;"></div>
+        <div class="desc">On <strong>Monday</strong> we'll send the details: link, format, and what to include.</div>
+      </div>
+      <div class="card">
+        <div class="num">02</div>
+        <div class="name" style="font-size: 18px;">Who judges</div>
+        <div class="mono" style="font-size: 13px; color: var(--muted); margin-top: 6px;">NEXO + Cursor Ambassadors</div>
+        <div class="accent-rule" style="margin: 14px 0 12px;"></div>
+        <div class="desc">The Fundación NEXO team and Cursor Ambassadors review every project.</div>
+      </div>
+      <div class="card">
+        <div class="num">03</div>
+        <div class="name" style="font-size: 18px;">Where you present</div>
+        <div class="mono" style="font-size: 13px; color: var(--muted); margin-top: 6px;">next session · May 2</div>
+        <div class="accent-rule" style="margin: 14px 0 12px;"></div>
+        <div class="desc">The winner presents their project live at the <strong>May 2</strong> session.</div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 24px;">
+      Deadline · <strong>Thursday, April 30</strong> &nbsp;·&nbsp; Details · <strong>Monday</strong> &nbsp;·&nbsp; Presentation · <strong>May 2</strong>
+    </div>
+
+    <div class="footer"><span class="left">Cursor × NEXO · Session 03 · Security</span><span>21 / 23</span></div>
+  </div>
+  <aside class="notes">
+    Close the loop: on Monday we send submission instructions, they have until Thursday, and the winner presents at the May 2 session. Judges: Fundación NEXO + Cursor Ambassadors.
+  </aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 22 — Credits (gift + QR)
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide dark">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_DARK.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner" src="partner.png" alt="Fundación NEXO">
+      </div>
+      <div class="eyebrow" style="color: var(--subtle);">Gift · for the audience</div>
+    </div>
+
+    <!-- Cascade of credits — purely decorative -->
+    <div class="credits-cascade" aria-hidden="true">
+      <div class="credit-coin fall"        style="left: 4%;  --dur: 6.8s; animation-delay: -0.2s;">+1 ✦</div>
+      <div class="credit-coin fall bright" style="left: 11%; --dur: 8.2s; animation-delay: -2.4s;">★</div>
+      <div class="credit-coin fall"        style="left: 19%; --dur: 7.4s; animation-delay: -4.1s;">+5</div>
+      <div class="credit-coin fall dot"    style="left: 26%; --dur: 9.0s; animation-delay: -1.0s;"></div>
+      <div class="credit-coin fall"        style="left: 33%; --dur: 6.2s; animation-delay: -3.6s;">✦</div>
+      <div class="credit-coin fall bright" style="left: 41%; --dur: 8.8s; animation-delay: -0.8s;">+1</div>
+      <div class="credit-coin fall"        style="left: 58%; --dur: 7.6s; animation-delay: -5.2s;">C</div>
+      <div class="credit-coin fall dot"    style="left: 65%; --dur: 6.4s; animation-delay: -2.0s;"></div>
+      <div class="credit-coin fall"        style="left: 72%; --dur: 8.4s; animation-delay: -4.6s;">★</div>
+      <div class="credit-coin fall bright" style="left: 80%; --dur: 7.0s; animation-delay: -1.4s;">+10</div>
+      <div class="credit-coin fall"        style="left: 88%; --dur: 6.6s; animation-delay: -3.0s;">✦</div>
+      <div class="credit-coin fall dot"    style="left: 95%; --dur: 9.2s; animation-delay: -0.4s;"></div>
+
+      <div class="credit-coin rise"        style="left: 7%;  --dur: 7.2s; animation-delay: -1.6s;">+1</div>
+      <div class="credit-coin rise dot"    style="left: 15%; --dur: 8.6s; animation-delay: -3.4s;"></div>
+      <div class="credit-coin rise"        style="left: 23%; --dur: 6.4s; animation-delay: -2.0s;">✦</div>
+      <div class="credit-coin rise bright" style="left: 36%; --dur: 8.0s; animation-delay: -5.0s;">★</div>
+      <div class="credit-coin rise"        style="left: 46%; --dur: 7.4s; animation-delay: -1.2s;">+5</div>
+      <div class="credit-coin rise dot"    style="left: 54%; --dur: 6.8s; animation-delay: -4.0s;"></div>
+      <div class="credit-coin rise"        style="left: 62%; --dur: 8.6s; animation-delay: -0.6s;">C</div>
+      <div class="credit-coin rise bright" style="left: 75%; --dur: 7.0s; animation-delay: -3.2s;">+1 ✦</div>
+      <div class="credit-coin rise"        style="left: 84%; --dur: 6.2s; animation-delay: -2.4s;">★</div>
+      <div class="credit-coin rise dot"    style="left: 92%; --dur: 9.0s; animation-delay: -4.4s;"></div>
+    </div>
+
+    <div style="margin-top: 36px; position: relative; z-index: 2;">
+      <div class="eyebrow" style="color: var(--subtle);">For you · because you showed up</div>
+      <h2 class="title-m credit-glow" style="color: var(--white); margin-top: 6px; font-size: 56px;">
+        Credits to get started.
+      </h2>
+      <p class="lede" style="color: var(--subtle); margin-top: 10px; max-width: 720px;">
+        Vibefy gives you credit for attending this session. Scan, activate, and start building with Cursor.
+      </p>
+      <div class="accent-rule" style="background: var(--paper); opacity: .85; margin: 12px 0 18px;"></div>
+    </div>
+
+    <div style="margin-top: 4px; display: grid; grid-template-columns: minmax(0, 1fr) 240px; align-items: center; gap: 48px; position: relative; z-index: 2;">
+      <div>
+        <div class="eyebrow" style="color: var(--subtle);">Direct link</div>
+        <div class="spacer-s"></div>
+        <div class="mono" style="font-size: 24px; color: var(--white); font-weight: 700; letter-spacing: 0; word-break: break-all;">cursor-distributor.vibefy.net</div>
+        <div class="spacer-m"></div>
+        <div class="body-s" style="color: var(--subtle); line-height: 1.55;">
+          Scan the QR with your phone camera.<br>
+          Activate the credit in under a minute.
+        </div>
+      </div>
+      <div class="qr-card" style="justify-self: end;">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=480x480&amp;margin=1&amp;data=https%3A%2F%2Fcursor-distributor.vibefy.net" alt="QR to cursor-distributor.vibefy.net">
+        <div class="qr-caption">cursor-distributor.vibefy.net</div>
+      </div>
+    </div>
+
+    <div class="footer"><span class="left">Cursor × NEXO · Session 03 · Security</span><span>22 / 23</span></div>
+  </div>
+  <aside class="notes">
+    Final gift: Vibefy credits for attendees. Ask them to open their camera and scan while you read the URL out loud.
+  </aside>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDE 23 — Thank you (dark closer)
+     ════════════════════════════════════════════════════════════════════════ -->
+<section>
+  <div class="slide dark">
+    <div class="chrome">
+      <div class="brand-lockup">
+        <img class="logo" src="brand/General Logos/Lockup Horizontal/PNG/LOCKUP_HORIZONTAL_2D_DARK.png" alt="Cursor">
+        <span class="lockup-x" aria-hidden="true">×</span>
+        <img class="lockup-partner" src="partner.png" alt="Fundación NEXO">
+      </div>
+      <div class="eyebrow" style="color: var(--subtle);">Thank you</div>
+    </div>
+
+    <img class="cube-wm" src="brand/General Logos/Cube/PNG/CUBE_2D_DARK.png" alt="">
+
+    <div style="margin: auto 0;">
+      <h1 class="title-xl" style="font-size: 130px; color: var(--white);">Thank you!</h1>
+      <div class="accent-rule" style="background: var(--paper); opacity: .8; margin: 28px 0;"></div>
+      <div style="font-size: 36px; font-weight: 700; color: var(--white); line-height: 1.2;">
+        You're not a security engineer.<br>
+        <span style="color: var(--subtle); font-weight: 400;">Your app isn't defenseless either.</span>
+      </div>
+    </div>
+
+    <div style="margin-top: 40px; display: flex; justify-content: space-between; align-items: end;">
+      <div>
+        <div style="font-size: 18px; font-weight: 600; color: var(--white);">Niccolò Mascaro</div>
+        <div style="font-size: 13px; color: var(--subtle); margin-top: 4px;">Cursor Ambassador · LATAM</div>
+      </div>
+      <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 10px;">
+        <img class="partner-logo sm" src="partner.png" alt="Fundación NEXO">
+        <div class="eyebrow" style="color: var(--subtle);">Resources</div>
+        <div class="mono" style="font-size: 13px; color: var(--subtle); margin-top: 4px;">
+          docs.cursor.com/context/rules · github.com/semgrep/mcp
+        </div>
+      </div>
+    </div>
+
+    <div class="footer"><span class="left">Cursor × NEXO · Session 03 · Security</span><span>23 / 23</span></div>
+  </div>
+</section>
+
+</div>
+</div>
+
+<!-- Reveal.js bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1280,
+    height: 720,
+    margin: 0,
+    minScale: 0.2,
+    maxScale: 2.0,
+    controls: true,
+    controlsLayout: "edges",
+    progress: true,
+    slideNumber: false,
+    history: true,
+    hash: true,
+    transition: "slide",          // 'none' | 'fade' | 'slide' | 'convex' | 'concave' | 'zoom'
+    transitionSpeed: "default",
+    backgroundTransition: "fade",
+    plugins: [ RevealNotes ],
+  });
+
+  // Toolbar: overview (show all) + fullscreen
+  const overviewBtn   = document.getElementById('btn-overview');
+  const fullscreenBtn = document.getElementById('btn-fullscreen');
+
+  overviewBtn.addEventListener('click', () => Reveal.toggleOverview());
+
+  Reveal.on('overviewshown', () => overviewBtn.setAttribute('aria-pressed', 'true'));
+  Reveal.on('overviewhidden', () => overviewBtn.setAttribute('aria-pressed', 'false'));
+
+  fullscreenBtn.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen?.();
+    } else {
+      document.exitFullscreen?.();
+    }
+  });
+
+  document.addEventListener('fullscreenchange', () => {
+    fullscreenBtn.setAttribute('aria-pressed', document.fullscreenElement ? 'true' : 'false');
+    lockLandscapeWhenPossible();
+  });
+
+  async function lockLandscapeWhenPossible() {
+    if (!document.fullscreenElement || !screen.orientation?.lock) return;
+    try {
+      await screen.orientation.lock('landscape');
+    } catch {
+      // Some mobile browsers only allow orientation changes from OS controls.
+    }
+  }
+
+  // Sync page background to current slide so letterbox bars match dark/light slides
+  function syncDeckBackground() {
+    const current = Reveal.getCurrentSlide();
+    const isDark = !!current && !!current.querySelector('.slide.dark');
+    document.documentElement.classList.toggle('deck-dark', isDark);
+  }
+  Reveal.on('ready', syncDeckBackground);
+  Reveal.on('slidechanged', syncDeckBackground);
+</script>
+</body>
+</html>

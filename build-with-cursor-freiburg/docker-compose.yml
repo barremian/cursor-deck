@@ -1,6 +1,6 @@
 services:
   bwc-freiburg-202506:
-    image: registry.hub.docker.com/barremian/bwc-freiburg-202605:0.0.1-bwc.freiburg.202506-alpha.2
+    image: registry.hub.docker.com/barremian/bwc-freiburg-202605:0.0.1-bwc.freiburg.202506-alpha.3
     container_name: bwc-freiburg-202506
     # Disable ports if using a reverse proxy
     ports:

@@ -49,7 +49,17 @@ html.deck-dark .reveal { background: var(--ink); }
   margin: 0;
 }
 
-.reveal a { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+.reveal a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.reveal a:hover,
+.reveal a:focus-visible,
+.reveal a:visited {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
 .reveal strong { font-weight: 600; }
 .reveal em { font-style: italic; color: var(--muted); }
 
